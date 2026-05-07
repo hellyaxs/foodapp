@@ -15,7 +15,7 @@ interface CheckoutForm {
 
 export default function CheckoutPage() {
   const router = useRouter()
-  const { items, total } = useCart()
+  const { items, total, clearCart } = useCart()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -61,6 +61,7 @@ export default function CheckoutPage() {
 
       const order = await response.json()
       router.push(`/order-success?id=${order.id}`)
+      clearCart()
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erro inesperado')
     } finally {
